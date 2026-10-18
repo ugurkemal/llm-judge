@@ -13,4 +13,15 @@ decision-judge samples.jsonl --rubric rubric.example.json
 ```
 
 Exitcode is 1 als er minstens één `fail` is (bruikbaar in CI).
+
+## Docker
+
+```bash
+docker build -t decision-judge .
+docker run --rm decision-judge
+docker run --rm -v "${PWD}:/data" decision-judge /data/mijn.jsonl --rubric /data/rubric.example.json
+```
+
+De container bereikt Ollama op de host via `OLLAMA_HOST=http://host.docker.internal:11434`. Overschrijf dit met `-e OLLAMA_HOST=...` als Ollama elders draait.
+Bestanden in UTF-8 zonder BOM opslaan (Windows PowerShell 5: `Set-Content -Encoding utf8` voegt een BOM toe).
 Valideer drempels (`pass_at`, `min_confidence`) altijd op eigen gelabelde voorbeelden.
